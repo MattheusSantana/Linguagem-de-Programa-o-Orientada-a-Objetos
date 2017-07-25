@@ -5,8 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 
+import entidades.Produto;
+import entidades.TAMANHO;
+import entidades.TIPO;
 import entidades.Vendedor;
 
 
@@ -28,11 +30,22 @@ public class ConectaBD {
 					Connection connection = DriverManager.getConnection("jdbc:sqlite:bd.sqlite");
 					 query = connection.createStatement();
 					
-					 cadastrarVendedor("joao", 5000.0, 12.0);
-					 result = query.executeQuery("SELECT * FROM vendedor");
+					// cadastrarVendedor("joao", 5000.0, 12.0);
+					 cadastrarProduto(25.0, 50, "tam_g", "CAMISETA_F");
+					 result = query.executeQuery("SELECT * FROM produto");
 					
-					while(result.next()){
-					System.out.println(result.getString("nome"));
+					
+					 
+					 while(result.next()){
+					System.out.print(result.getString("id_produto"));
+					System.out.print(" ");
+					System.out.print(result.getString("valor"));
+					System.out.print(" ");
+					System.out.print(result.getString("tipo"));
+					System.out.print(" ");
+					System.out.print(result.getString("qnt_estoque"));
+					System.out.print(" ");
+					System.out.println(result.getString("tamanho"));
 					}
 				}
 					catch (SQLException e) {
@@ -51,7 +64,23 @@ public class ConectaBD {
 			query.executeUpdate(str);
 	
 		 } catch (SQLException e) {
-			System.out.println("Erro aqui");
+			System.out.println("Não foi possível cadastrar o vendedor!");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+public static void cadastrarProduto(Double valor, int qntEstoque, String tam, String t){
+	
+		Produto produto = new Produto(valor, qntEstoque, TAMANHO.TAM_G, TIPO.CAMISETA_F);
+		
+		 try {
+			 String str = "INSERT INTO produto(valor, qnt_estoque, tamanho, tipo)" + "" +  "VALUES('" +valor.toString()+ "','"	 + Integer.toString(qntEstoque) +"','" + tam + "'," + "'"+ t + "')";
+	
+			query.executeUpdate(str);
+	
+		 } catch (SQLException e) {
+			System.out.println("Não foi possível cadastrar o produto!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

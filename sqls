@@ -1,0 +1,1 @@
+CREATE TABLE "vendedor" ("nome" VARCHAR (45) NOT NULL ,"id_vendedor" INTEGER PRIMARY KEY  NOT NULL ,"salario_base" DOUBLE NOT NULL ,"qnt_vendas" INTEGER NOT NULL ,"id_produtos_vendidos" INTEGER NOT NULL ,"tx_comissao" DOUBLE DEFAULT (0) )

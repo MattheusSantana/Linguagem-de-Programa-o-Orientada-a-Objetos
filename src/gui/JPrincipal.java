@@ -42,8 +42,8 @@ public class JPrincipal extends JFrame {
 			menu.add(menuItem);
 			
 			// Cria conteudo do painel
-			JPanel contentPane = new JPanel(new BorderLayout());
-			contentPane.setOpaque(true);
+		//	JPanel contentPane = new JPanel(new BorderLayout());
+		//	contentPane.setOpaque(true);
 			
 			// Cria a janela
 			JFrame frame = new JFrame("Lojix - Home");
@@ -73,19 +73,24 @@ public class JPrincipal extends JFrame {
 				System.out.println(dados[i][3]+" ");
 				}
 			tabelaProdutos = new JTable(dados, columnNames);
-			System.out.println("saiu");
+			tabelaProdutos.setAutoResizeMode(tabelaProdutos.AUTO_RESIZE_OFF); 
+			tabelaProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		    tabelaProdutos.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		    tabelaProdutos.setFillsViewportHeight(true);
 			
-				
-			/*Adicionando tabela a uma barra de rolagem*/
+		     /*Adicionando tabela a uma barra de rolagem*/
 			JScrollPane scrollpane =  new JScrollPane(tabelaProdutos); 
 			
 			tabelaProdutos.setFillsViewportHeight(true);
+			
 			/*Adicionando barra de rolagem ao painel*/
-			contentPane.add(scrollpane);
+		//	contentPane.add(scrollpane);
 			
-			getContentPane().add(contentPane);
+			//getContentPane().add(contentPane);
+			frame.add(tabelaProdutos.getTableHeader(), BorderLayout.PAGE_START);
+			frame.add(tabelaProdutos, BorderLayout.CENTER);
 			
-			frame.add(tabelaProdutos);
+			//frame.add(tabelaProdutos);
 			frame.setVisible(true);
 		}
 }

@@ -12,7 +12,6 @@ import entidades.Produto;
 import entidades.TAMANHO;
 import entidades.TIPO;
 import entidades.Vendedor;
-import gui.ModeloTabelaProduto;
 
 public class ConectaBD {
 	static ResultSet result;
@@ -56,11 +55,8 @@ public class ConectaBD {
 		}
 	}
 
-	public static void cadastrarProduto(Double valor, int qntEstoque, int tam, int t) {
+	public static void cadastrarProduto(Double valor, int qntEstoque, String tamanho, String tipo) {
 		
-
-		String tamanho = tamanho(tam);
-		String tipo = tipo(t);
 
 		Produto produto = new Produto(valor, qntEstoque, TAMANHO.valueOf(tamanho), TIPO.valueOf(tipo));
 		if(buscaProduto(produto) == 1){
@@ -78,69 +74,7 @@ public class ConectaBD {
 		}
 	}
 
-	public static String tamanho(int tam) {
-		String tamanho;
-		switch (tam) {
-		case 1:
-			tamanho = TAMANHO.TAM_P.toString();
-			break;
 
-		case 2:
-			tamanho = TAMANHO.TAM_M.toString();
-			break;
-
-		case 3:
-			tamanho = TAMANHO.TAM_G.toString();
-			break;
-
-		case 4:
-			tamanho = TAMANHO.TAM_GG.toString();
-			break;
-
-		case 5:
-			tamanho = TAMANHO.TAM_EXTRA_G.toString();
-			break;
-
-		default:
-			tamanho = "NULL";
-			break;
-		}
-		return tamanho;
-	}
-
-	public static String tipo(int t) {
-		String tipo;
-		switch (t) {
-		case 1:
-			tipo = TIPO.CALCA_F.toString();
-			break;
-		case 2:
-			tipo = TIPO.CALCA_M.toString();
-			break;
-		case 3:
-			tipo = TIPO.SHORT_F.toString();
-			break;
-		case 4:
-			tipo = TIPO.SHORT_M.toString();
-			break;
-		case 5:
-			tipo = TIPO.JAQUETA_F.toString();
-			break;
-		case 6:
-			tipo = TIPO.JAQUETA_M.toString();
-			break;
-		case 7:
-			tipo = TIPO.CAMISETA_F.toString();
-			break;
-		case 8:
-			tipo = TIPO.CAMISETA_M.toString();
-			break;
-		default:
-			tipo = "NULL";
-			break;
-		}
-		return tipo;
-	}
 
 	/*Verifica se o produto passado por parâmentro ja foi cadastrado no banco! retorna 1 caso não esteja cadastrado e 0 caso contrário!*/
 	public static int buscaProduto(Produto produto) {
@@ -152,8 +86,8 @@ public class ConectaBD {
 			while(result.next()){
 				/*Se o valor, tipo e o tamanho do produto for igual á tupla que está sendo análisada retorne 0.*/
 				
-			if (result.getString("tipo").equals(produto.getTipo())
-					&& result.getString("tamanho").equals(produto.getTamanho()) 
+			if (result.getString("tipo").equals(produto.getTipo().toString())
+					&& result.getString("tamanho").equals(produto.getTamanho().toString()) 
 					&& result.getString("valor").equals(String.valueOf(produto.getValor()))){
 					
 					System.out.println("Produto já cadastrado!");

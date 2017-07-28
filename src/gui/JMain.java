@@ -8,9 +8,11 @@ public class JMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		JPrincipal jPrincipal = new JPrincipal();
-		ConectaBD.cadastrarProduto(25.0, 5, TAMANHO.TAM_P.toString(),TIPO.JAQUETA_F.toString());
-		
+		//JPrincipal jPrincipal = new JPrincipal();
+		//ConectaBD.cadastrarProduto(25.0, 5, TAMANHO.TAM_P.toString(),TIPO.JAQUETA_F.toString());
+		//JProduto produto = new JProduto();
+		//JVendedor cadastrarVendedor = new JVendedor();
+		JVenda venda = new JVenda();
 	}
 
 }

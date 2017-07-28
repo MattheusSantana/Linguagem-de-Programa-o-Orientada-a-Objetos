@@ -39,23 +39,51 @@ public class ConectaBD {
 	}
 	
 	
-	public static void cadastrarVendedor(String n, Double salarioBase, Double txComissao) {
+	public static int cadastrarVendedor(String n, Double salarioBase, Double txComissao) {
 
 		Vendedor vendedor = new Vendedor(n, salarioBase, txComissao);
+		if(buscaVendedor(vendedor)== 1){
 		try {
 			String str = "INSERT INTO vendedor(nome, salario_base, qnt_vendas, tx_comissao)" + "" + "VALUES('" + n
 					+ "','" + salarioBase.toString() + "', 0,'" + txComissao.toString() + "')";
 
 			query.executeUpdate(str);
-
+			return 1;
 		} catch (SQLException e) {
 			System.out.println("Não foi possível cadastrar o vendedor!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -1;
 		}
+		}
+		return 0;
 	}
 
-	public static void cadastrarProduto(Double valor, int qntEstoque, String tamanho, String tipo) {
+	//Retorna 1 se cadastrar e 0 caso contrário e -1 caso houver erros!
+	public static int buscaVendedor(Vendedor vendedor){
+		String sql = "SELECT nome FROM vendedor";
+		
+		/*Navegando por todas as tuplas do banco e verificando caso o produto já esteja cadastrado!*/
+		try {
+			result = query.executeQuery(sql);
+			while(result.next()){
+				
+				
+			if (result.getString("nome").equals(vendedor.getNome())){
+					System.out.println("Vendedor já cadastrado!");
+					return 0;
+				}
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 1;
+	}
+	//Retorna 1 se cadastrar e 0 caso contrário e -1 caso houver erros!
+	public static int cadastrarProduto(Double valor, int qntEstoque, String tamanho, String tipo) {
 		
 
 		Produto produto = new Produto(valor, qntEstoque, TAMANHO.valueOf(tamanho), TIPO.valueOf(tipo));
@@ -66,12 +94,16 @@ public class ConectaBD {
 
 			query.executeUpdate(str);
 			System.out.println("Produto Cadastrado!!");
+			return 1;
 		} catch (SQLException e) {
 			System.out.println("Não foi possível cadastrar o produto!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return -1;
 		}
 		}
+
+		return 0;
 	}
 
 
@@ -95,7 +127,7 @@ public class ConectaBD {
 			}
 			}
 			
-			return 1;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,7 +152,7 @@ public static Object[][] preencherTabelaProdutos(){
 		}
 		
 	
-		System.out.println(qtd);
+		
 	Object dados[][] =  new Object[qtd][4];
 		try {
 						
@@ -151,4 +183,29 @@ public static Object[][] preencherTabelaProdutos(){
 		return dados;
 	}
 
+public static int venderProduto(String tipo){
+	System.out.println(tipo);
+	String sql = "SELECT qnt_estoque AS qtd FROM produto WHERE tipo='"+tipo+"'"; 
+	try {
+		result = query.executeQuery(sql);
+		System.out.println(result.getString("qtd"));
+		int qtd = Integer.parseInt(result.getString("qtd")) -1;
+		
+		if(qtd > 0){
+		System.out.println(qtd);
+		sql = "UPDATE produto SET qnt_estoque = '" +qtd+"' WHERE tipo='"+tipo+"'";
+		 query.executeUpdate(sql);
+		 
+		 
+		return 1; 
+		}
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return -1;
+	}
+	
+	return 0;
+}
 }

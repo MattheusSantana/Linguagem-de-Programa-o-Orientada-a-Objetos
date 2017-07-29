@@ -19,14 +19,17 @@ import bancoDeDados.ConectaBD;
 //Extends JFrame para referenciar a classe JFrame ao chamar as funções.
 public class JPrincipal extends JFrame implements ActionListener {
 
-	ConectaBD bd = new ConectaBD();
+	ConectaBD bd = new ConectaBD(); // Objeto que chamará os métodos do banco de dados
 
 	
-	private JMenuBar menuBar;
-	private JMenu menu;
-	private JMenuItem menuItemNP;
-	private JMenuItem menuItemNV;
+	private JMenuBar menuBar;		//MenuBar Principal.
+	private JMenu menu;				//Menu principal.
+	private JMenuItem menuItemNP;	//Menu de novo produto.
+	private JMenuItem menuItemNV;	//Menu de novo vendedor.
+	private JMenuItem menuItemVE;	//Menu de vender produto.
+	private JMenuItem menuItemLV;	//Menu de listar vendedores.
 
+	
 	public JPrincipal() {
 		setLayout(null);
 
@@ -46,22 +49,37 @@ public class JPrincipal extends JFrame implements ActionListener {
 		menuItemNP.addActionListener(this);
 
 		menuItemNV.addActionListener(this);
-
-		setExtendedState(MAXIMIZED_BOTH); // Iniciar janela em tela
+		
+		menu = new JMenu("Vendas");
+		menuBar.add(menu);
+		
+		menuItemVE = new JMenuItem("Nova Venda");
+		menu.add(menuItemVE);
+		
+		menuItemVE.addActionListener(this);
+		
+		menu = new JMenu("Vendedores");
+		menuBar.add(menu);
+		
+		menuItemLV = new JMenuItem("Listar Vendedores");
+		menu.add(menuItemLV);
+		
+		menuItemLV.addActionListener(this);
+		
+		// Iniciar janela em tela
+		setExtendedState(MAXIMIZED_BOTH); 
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Cria e arranja o conteúdo do painel
 		setJMenuBar(menuBar);
 		
-		
-		
-		//System.out.println(tabelaProdutos.getSelectedRow());
+	
 		setVisible(true);
 	}
 
 	
-
+	/*Este método invoca a janela referente á cada menuItem do programa*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -73,5 +91,12 @@ public class JPrincipal extends JFrame implements ActionListener {
 			JVendedor cadastrarVendedor = new JVendedor();
 		}
 		
+		if (e.getSource() == menuItemVE) {
+			JVenda venda = new JVenda();
+		}
+		
+		if(e.getSource() == menuItemLV) {
+			TabelaVendedor tabelaVendedor = new TabelaVendedor();
+		}
 	}
 }

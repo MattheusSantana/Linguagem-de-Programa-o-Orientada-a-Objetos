@@ -21,12 +21,12 @@ public class JProduto extends JFrame implements ActionListener{
 	private JLabel quantidade;
 	private JButton cadastrar;
 	private JButton cancelar;	
-	private JTextField v;
+	private JTextField v; 
 	private JTextField qtd;
-	private JComboBox<String> t = new JComboBox<String>();
-	private JComboBox<String> tam = new JComboBox<String>();
+	private JComboBox<String> t = new JComboBox<String>(); //ComoBox referente ao tipo do produto.
+	private JComboBox<String> tam = new JComboBox<String>(); //ComboBoc referente ao tamanho do produto
 	
-	JFrame frame = new JFrame();
+	/*Objeto que fará a conexão com o banco de dados*/
 	ConectaBD bd = new ConectaBD();
 	
 	public JProduto (){
@@ -42,6 +42,7 @@ public class JProduto extends JFrame implements ActionListener{
 			tipo = new JLabel("Tipo:");
 			tipo.setBounds(100, 70, 150, 20);
 		
+			/*Adicionando itens no ComboBox*/
 			t.addItem(TIPO.CALCA_F.toString());
 			t.addItem(TIPO.CALCA_M.toString());
 			t.addItem(TIPO.CAMISETA_F.toString());
@@ -55,6 +56,7 @@ public class JProduto extends JFrame implements ActionListener{
 			tamanho = new JLabel("Tamanho:");
 			tamanho.setBounds(100, 170, 150, 20);
 			
+			/*Adicionando itens no ComboBox*/
 			tam.addItem(TAMANHO.TAM_P.toString());
 			tam.addItem(TAMANHO.TAM_M.toString());
 			tam.addItem(TAMANHO.TAM_G.toString());
@@ -103,15 +105,18 @@ public class JProduto extends JFrame implements ActionListener{
 	}
 
 
+	/*Action Listener para o botão cadastrar e cancelar*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		/*Caso seja o botão cadastrar*/
 		if(e.getSource()==cadastrar){
+			
+			/*Verificando a string que está no JTextField*/
 			if(!(v.getText().matches("[0-9]+") || qtd.getText().matches("[0-9]+"))) {
 				JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");
 				return;
 		}else{
 				/*TENTE FAZER O CADASTRO!*/
-				/*LANÇAR EXCEÇÕES AQUI E MOSTRAR MENSAGEM DE ERRO AO USUARIO INFORMANDO QUE NAO FOI POSSIVEL.*/
 				int resultado = bd.cadastrarProduto(Double.parseDouble(v.getText()), Integer.parseInt(qtd.getText()), tam.getSelectedItem().toString(), t.getSelectedItem().toString());
 				if(resultado == 1)
 					JOptionPane.showMessageDialog(null, "Produto Cadastrado!");
@@ -122,6 +127,7 @@ public class JProduto extends JFrame implements ActionListener{
 			}
 			
 	}
+		/*Fechando a tela*/	
 		if(e.getSource()== cancelar){
 			System.exit(0);
 		}

@@ -7,7 +7,6 @@ public class Vendedor
 	private String nome;
 	private double salarioBase, valorVendas, txComissao;
 	private int qntVendas;
-	private ArrayList<Produto> produtos = new ArrayList<>();
 	
 	public Vendedor(String nome, double salarioBase, double txComissao)
 	{
@@ -71,22 +70,7 @@ public class Vendedor
 		this.qntVendas += qntVendas;
 	}
 	
-	public void vende (int qntProdutos, Produto produto)
-	{
-		// Verifica se o produto e a quantidade estão em estoque
-		if (Estoque.getProdutosDisponiveis().contains(produto) 
-			 && qntProdutos <= Estoque.getProdutosDisponiveis().get(Estoque.getProdutosDisponiveis().indexOf(produto)).getQntEstoque())
-		{
-			Estoque.removeProduto(qntProdutos, produto);
-			setValorVendas(qntProdutos * produto.getValor());
-			setQntVendas(1);
-			Estoque.adicionaProdutoVendido(produto);
-			produtos.add(produto);
-		}
-		
-		else
-			System.out.println("Produto indisponível no estoque.");
-	}
+
 
 	
 }

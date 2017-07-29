@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 
 import bancoDeDados.ConectaBD;
 
+
+/*Cadastra um novo vendedor*/
 public class JVendedor extends JFrame implements ActionListener {
 	private JLabel nome;
 	private JLabel salario;
@@ -20,7 +22,7 @@ public class JVendedor extends JFrame implements ActionListener {
 	private JButton cancelar;	
 	
 	ConectaBD bd = new ConectaBD();
-	JFrame frame = new JFrame();
+
 	public JVendedor(){
 		setLayout(null);
 		setSize(600,800);
@@ -59,12 +61,15 @@ public class JVendedor extends JFrame implements ActionListener {
 		setVisible(true);
 		
 	}
+	/*Cadastra o vendedor*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==cadastrar){
 		
 				int resultado = bd.cadastrarVendedor(nomeTF.getText().toString(), Double.parseDouble(salarioTF.getText().toString()), 0.0);
+				
+				/*Informando o usuário sobre o resultado do cadastro*/
 				if(resultado == 1)
 					JOptionPane.showMessageDialog(null, "Vendedor Cadastrado!");
 				else if(resultado == 0)
@@ -73,6 +78,7 @@ public class JVendedor extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Erro ao cadastrar Vendedor!");
 				
 		}
+		/*Fechando a tela*/
 		if(e.getSource()== cancelar){
 			System.exit(0);
 		}
